@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cielo Mágico</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at bottom, #1b1446, #05010f);
+      overflow: hidden;
+      font-family: 'Trebuchet MS', sans-serif;
+      cursor: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, #fff, #bfa7ff);
+      border-radius: 50%;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 6px #c9b6ff);
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(2); }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffd6ff, transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: fade 1s forwards;
+    }
+
+    @keyframes fade {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(3); }
+    }
+
+    .shooting-star {
+      position: absolute;
+      width: 150px;
+      height: 2px;
+      background: linear-gradient(90deg, #fff, #caa8ff, transparent);
+      filter: drop-shadow(0 0 10px #e5d4ff);
+      animation: shoot 1.2s linear forwards;
+    }
+
+    @keyframes shoot {
+      from { transform: translate(0, 0); opacity: 1; }
+      to { transform: translate(500px, 250px); opacity: 0; }
+    }
+
+    .title {
+      position: absolute;
+      width: 100%;
+      top: 38%;
+      text-align: center;
+      font-size: 2.6rem;
+      color: #f6e9ff;
+      letter-spacing: 3px;
+      text-shadow:
+        0 0 10px #d6bfff,
+        0 0 25px #b48cff,
+        0 0 40px #7b5cff;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .orb {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(180,140,255,0.4), transparent 70%);
+      border-radius: 50%;
+      filter: blur(8px);
+      animation: drift 20s linear infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translateX(-200px); }
+      to { transform: translateX(calc(100vw + 200px)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">You’re so beautiful to me ✨</div>
+
+  <script>
+    // Estrellas base
+    const stars = 220;
+    for (let i = 0; i < stars; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.top = Math.random() * innerHeight + 'px';
+      s.style.left = Math.random() * innerWidth + 'px';
+      s.style.animationDuration = (Math.random() * 4 + 2) + 's';
+      document.body.appendChild(s);
+    }
+
+    // Orbes mágicos
+    for (let i = 0; i < 5; i++) {
+      const orb = document.createElement('div');
+      orb.className = 'orb';
+      orb.style.top = Math.random() * innerHeight + 'px';
+      orb.style.animationDuration = (15 + Math.random() * 20) + 's';
+      document.body.appendChild(orb);
+    }
+
+    // Estrellas fugaces
+    setInterval(() => {
+      const sh = document.createElement('div');
+      sh.className = 'shooting-star';
+      sh.style.top = Math.random() * innerHeight * 0.4 + 'px';
+      sh.style.left = Math.random() * innerWidth * 0.4 + 'px';
+      document.body.appendChild(sh);
+      setTimeout(() => sh.remove(), 1200);
+    }, 2200);
+
+    // Chispas mágicas con el mouse
+    document.addEventListener('mousemove', e => {
+      const sp = document.createElement('div');
+      sp.className = 'sparkle';
+      sp.style.left = e.pageX + 'px';
+      sp.style.top = e.pageY + 'px';
+      document.body.appendChild(sp);
+      setTimeout(() => sp.remove(), 1000);
+    });
+      // Texto "I like you" cayendo como estrellas
+    const phrases = [
+      "I like you",
+      "I like you",
+      "I like you",
+      "I like you ✨"
+    ];
+
+    setInterval(() => {
+      const text = document.createElement('div');
+      text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+      text.style.position = 'absolute';
+      text.style.left = Math.random() * window.innerWidth + 'px';
+      text.style.top = '-30px';
+      text.style.color = '#f2ddff';
+      text.style.fontSize = '1rem';
+      text.style.opacity = '0.9';
+      text.style.pointerEvents = 'none';
+      text.style.textShadow = '0 0 10px #caa8ff';
+      text.style.animation = 'fall 6s linear forwards';
+      document.body.appendChild(text);
+
+      setTimeout(() => text.remove(), 6000);
+    }, 1800);
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fall {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(110vh); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+
+  </script>
+</body>
+</html>
